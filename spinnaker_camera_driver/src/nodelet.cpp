@@ -425,6 +425,9 @@ private:
     }
   }
 
+// Make the device try to automatically reset itself if it crashes
+#define STOP_ON_ERROR 1
+
   /*!
   * \brief Function for the boost::thread to grabImages and publish them.
   *
@@ -473,6 +476,9 @@ private:
             NODELET_DEBUG_ONCE("Stopped camera.");
 
             state = STOPPED;
+
+            std::cout << "Camera reset. Sleeping for 1 second..\n";
+            ros::Duration(1.0).sleep();  // sleep to give the camera a chance to reset
           }
           catch (std::runtime_error& e)
           {
